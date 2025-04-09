@@ -1,0 +1,20 @@
+{
+  "name": "ejs",
+  "version": "1.0.0",
+  "main": "app",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ola",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "bootstrap": "^5.3.5",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "mongoose": "^8.12.1"
+  }
+}

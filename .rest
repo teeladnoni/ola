@@ -1,0 +1,58 @@
+POST http://localhost:4000/form/add-form
+Content-Type: application/json
+ 
+{
+    "username": "aaa",
+    "password": "adesinaola1234",
+    "email": "adesinaolalekan211@gmail.com",
+    "phone": "08142535950"
+}
+
+###
+POST http://localhost:4000/form/addjob
+Content-Type: application/json
+ 
+{
+     "picture": "https://th.bing.com/th/id/OIP.WJvR44SvrD3YrEm0tTQipQHaE8?rs=1&pid=ImgDetMain",
+     "title": "Goods and services Management",
+     "description": " You manage the production, sales and distribution of goods and services",
+    "company": " Ayombo inc.",
+    "location": " Abuja",
+     "salary": 100000,
+    "datePosted": 2025,
+     "applicants": " All",
+   "offerDescription": " All offers"
+   
+ 
+}
+
+###
+POST  http://localhost:4000/form/get-user
+Content-Type: application/json
+
+{
+    "username": "James111",
+    "password": "adesinaola1234"    
+    
+}
+
+###
+GET http://localhost:4000/form/getjobs
+Content-Type: application/json
+
+{
+    
+}
+###
+POST http://localhost:4000/form/apply-job
+Content-Type: application/json
+
+{
+    "fullName": "Adesina",
+    "email": "Ayooola111@gmail.com",
+    "phone": "08142535950",
+    "address": "Adefelaoluwa G",
+    "Dob": "12345"
+    
+}
+
