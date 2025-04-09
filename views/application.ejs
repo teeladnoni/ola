@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application</title>
+</head>
+<body>
+    <form action="">
+        <div>
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+        </div>
+        <div>
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" required></textarea>
+        </div>
+        <div>
+            <label for="Dob">Dob:</label>
+            <input type="date" id="dob" name="dob" required>
+        </div>
+        <button type="submit">Submit Application</button>
+    </form>
+    <style>
+            body {
+                font-family: Arial, sans-serif;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            form {
+                background-color: #f9f9f9;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            div {
+                margin-bottom: 15px;
+            }
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+            input, textarea {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+            button {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            button:hover {
+                background-color: #45a049;
+            }
+        </style>
+        
+</body>
+   
+<script>
+    const form = document.querySelector('form');
+    const fullName = document.getElementById('fullName');
+    const email = document.getElementById('email');
+    const dob = document.getElementById('dob');
+    const phone = document.getElementById('phone');
+    const address = document.getElementById('address');
+    const submitButton = document.querySelector('button[type="submit"]');
+
+    submitButton.addEventListener('click', async(e) =>{
+        e.preventDefault();
+                try {
+            const formData = {
+                fullName: fullName.value,
+                email: email.value,
+                dob: dob.value,
+                phone: phone.value,
+                address: address.value
+            };
+            console.log(formData);
+            
+            const response = await fetch("http://localhost:4000/form/apply-job", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            console.log(response);
+            
+            const data = await response.json();
+            if (data.ok) {
+            console.log(data);
+            form.reset(); } 
+            else {
+                console.error('Error:', data.error);
+            }
+            
+        } catch (error) {
+            console.error('Error:', error);
+            
+        }
+    });
+</script>
+
+</html>

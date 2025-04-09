@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/home.css">
+    <title>Registration</title>
+
+    <style>
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76,175,80,0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        #message, #message2 {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        #message p {
+            color: #4CAF50;
+            margin: 0;
+        }
+
+        #message2 p {
+            color: #f44336;
+            margin: 0;
+        }
+
+        @media screen and (max-width: 480px) {
+            form {
+                margin: 10px;
+                padding: 15px;
+            }
+
+            input, button {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">You can register an accout if you do not have one</h2>
+    <form action="">
+        <label for="username"></label>
+        <input type="text" id="username" name="username"  placeholder="Username" required>
+    <br><br>
+        <label for="password"></label>
+        <input type="password" id="password" name="password"  placeholder="Password" required>
+    <br><br>
+        <label for="email"></label>
+        <input type="email" id="email" name="email"  placeholder="Email" required>
+    <br><br>
+
+        <label for="phone"></label>
+        <input type="tel" id="phone" name="phone"  placeholder="Phone Number"  required>
+    <br>
+    <div id="message"></div>
+    <button type="submit" id="submitBtn">Submit</button><br> <br>
+    <div>You have an account already? <a href="/">Click</a> to log in</div>
+    </form>
+
+    
+    
+
+    
+</body>
+<script>
+    const usernameEl = document.getElementById('username');
+    const passwordEl = document.getElementById('password');
+    const emailEl  = document.getElementById('email');
+    const phoneEl = document.getElementById('phone');
+    const Btn = document.getElementById('submitBtn');
+    const messageDiv = document.getElementById('message');
+    const message2Div = document.getElementById('message2');
+    const form = document.querySelector('form');
+    
+    // Add styles dynamically
+    document.head.insertAdjacentHTML('beforeend', `
+        
+    `);
+
+    Btn.addEventListener('click', async(e)=> {
+        e.preventDefault();
+        console.log({
+            username: usernameEl.value,
+            password: passwordEl.value,
+            email: emailEl.value,
+            phone: phoneEl.value,
+        });
+            
+        const reqBody={
+            username: username.value,
+            password: password.value,
+            email: email.value,
+            phone: phone.value
+        }
+
+        console.log(reqBody);
+
+        try {
+            const response = await fetch("http://localhost:4000/form/add-form", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(reqBody)
+            })
+            const data = await response.json();
+            console.log(data); 
+
+            if(data.success){
+                messageDiv.innerHTML = `<p>${data.msg}</p>`;
+                window.location.href = '/home';
+            }
+            else if(!data.success){
+                messageDiv.innerHTML =`<p>${data.message}</p>`;
+                Btn.disabled = false;
+            }
+        } catch(err){
+            throw err;
+        };
+    });
+</script>
+</script>
+</html>

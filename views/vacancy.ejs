@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="home.css">
+    <title>Document</title>
+    <style>
+        #jobAvial {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        #each-Job {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+
+        #each-Job:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #each-Job span {
+            font-weight: bold;
+            color: #333;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        #apply-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.2s;
+        }
+
+        #apply-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>   
+    <div>
+    <header id="header">
+        <div id="logo">
+            <h1>LOGO</h1>
+            <div id="search-bar">
+                <input type="text" id="search-input" placeholder="Search...">
+                <button type="submit" id="search-button">Search</button>
+            </div>
+        </div>
+        <nav id="nav-bar">
+            <ul>
+                <li style="font-size: x-small; font-weight: lighter;"><a href="/" id="nav-link">Log Out</a></li>
+                <li><a href="/home" id="nav-link">Home</a></li>
+                <li><a href="/vacancy" id="nav-link">Vacancy</a></li>
+                <li><a href="/postjobs" id="nav-link">Post</a></li>
+                <li><a href="/about" id="nav-link">About</a></li>
+                <li><a href="/cart" id="nav-link">Cart</a></li>
+                <li><a href="/contact" id="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+        
+    </header>
+    
+    <h1>These are the jobs available</h1>
+    <main id="vacancy-body">
+        <div id="jobAvial"></div>
+        
+    </main>
+</div>
+</body>
+<script>
+    const allJobs = document.getElementById("jobAvail");
+        (async function getAllJob(){
+                const response = await fetch('http://localhost:4000/form/getjobs');
+                const data = await response.json();
+                console.log(data);
+        data.forEach((data) => {
+            document.querySelector("div").innerHTML += `<p id="each-Job">
+               <span>Job Title:</span>${data.title} </br> 
+               <span>Job Description:</span> ${data.description} </br>
+               <span>Job Salary:</span> ${data.salary} </br>
+               <span>Job Posted On:</span> ${data.datePosted}</br>
+                <span>Job Location:</span> ${data.location} </br>
+                <span>Job Display:</span> ${data.picture} </br>
+                <span>Job Company:</span> ${data.company} </br>
+                <span>Applicants:</span> ${data.applicants}</br>
+                <span>Job Benefits:</span> ${data.offerDescription}
+                
+                <a  id="" href="application"><button id="apply-btn">Apply</button></a>
+                </p>`;
+            
+                    });                    
+        })(this);
+        
+</script>
+</html>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/home.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        #login-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        input[type="submit"]:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        #error {
+            color: #ff0000;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #45a049;
+        }
+
+        @media (max-width: 480px) {
+            #login-form {
+                padding: 1rem;
+                margin: 1rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+    <title>Login</title>
+</head><html lang="en">
+
+<body>
+    <h2>Supply your login details</h2>
+    <!-- login for -->
+     <form action="" id="login-form">
+        <label for="uname">Username:</label>
+        <input type="text" id="username" required><br><br>
+        <label for="psw">Password:</label>
+        <input type="password" id="Password"><br><br>
+        <input type="submit" value="Login" id="submitBtn">
+        <p id="error"></p>
+<br><br>
+    <p>Forget password? <a href="">Click Here</a></p>
+    <br>
+    <a href="register">Create Account</a>
+</body>
+
+<script>
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const userName = document.getElementById("username").value;
+    const password = document.getElementById("Password").value;
+    const loginBtn = document.getElementById("submitBtn")
+    
+   
+    const response = await fetch("http://localhost:4000/form/get-user",{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({username: userName, password: password})
+        
+    })
+    try {
+        const data = await response.json();
+        if(data.username === userName && data.password === password){
+            loginBtn.disabled = true;
+            alert("Login Successful!");
+            window.location.href = "/home";
+        }
+        else{
+            document.getElementById("error").innerHTML = "Wrong username or password";
+            loginBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert("Failed to login. Please try again.");
+        
+    }
+
+        
+        });
+        
+</script>
+</html>

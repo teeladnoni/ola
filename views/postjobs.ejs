@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="home.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #job-house {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        #job-house label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        #job-house input,
+        #job-house textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        #job-house input:focus,
+        #job-house textarea:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0,123,255,0.3);
+        }
+
+        #job-house textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        @media (max-width: 768px) {
+            #job-house {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+    <title>Post Job</title>
+</head>
+<html lang="en">
+<body>
+    <header id="header">
+        <div id="logo">
+            <h1>LOGO</h1>
+            <div id="search-bar">
+                <input type="text" id="search-input" placeholder="Search...">
+                <button type="submit" id="search-button">Search</button>
+            </div>
+        </div>
+        <nav id="nav-bar">
+            <ul>
+              <li style="font-size: x-small; font-weight: lighter;"><a href="/" id="nav-link">Log Out</a></li>
+                <li><a href="/home" id="nav-link">Home</a></li>
+                <li><a href="/vacancy" id="nav-link">Vacancy</a></li>
+                <li><a href="/postjobs" id="nav-link">Post</a></li>
+                <li><a href="/about" id="nav-link">About</a></li>
+                <li><a href="/cart" id="nav-link">Cart</a></li>
+                <li><a href="/contact" id="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+        
+    </header>
+    <form action="" id="job-house">
+        <label for="job-title">Job Title</label>
+        <input type="text" id="job-title" name="job-title" required>
+        <br> <br>
+        <label for="job-description">Job Description</label>
+        <textarea id="job-description" name="job-description" required></textarea>
+        <br> <br>
+        <label for="job-location">Job Location</label>
+        <input type="text" id="job-location" name="job-location" required>
+        <br> <br>
+        <label for="job-salary">Job Salary</label>
+        <input type="number" id="job-salary" name="job-salary" required>
+        <br> <br>
+        <label for="image">Workplace image</label>
+        <input type="file" id="image" name="image" accept="image/*"  required>
+        <br> <br>
+        <label for="company">Company</label>
+        <input type="text" id="company" name="company" required>
+        <br> <br>
+        <label for="datePosted">Date Posted</label>
+        <input type="date" id="datePosted" name="datePosted" >
+        <br><br>
+        <label for="applicants">Who can apply</label>
+        <input type="text" id="applicants" name="applicants" required>
+        <br> <br>
+        <label for="offerDescription">Offer Description</label>
+        <textarea id="offerDescription" name="offerDescription" ></textarea>
+        <br> 
+        <div id="message"></div>
+        <br>
+        <input type="submit" value="Submit" id="submit-btn">
+    </form>
+    
+    
+</body>
+<script>
+    const jobForm = document.getElementById('job-house');
+   const jobType = document.getElementById("job-title");
+   const jobDescription = document.getElementById("job-description");
+   const jobSalary = document.getElementById("job-salary");
+   const offerDescription = document.getElementById("offerDescription");
+   const jobLocation = document.getElementById("job-location");
+   const submitBtn = document.getElementById("submit-btn");
+   const picture = document.getElementById("image");
+   const applicants = document.getElementById("applicants");
+   const company = document.getElementById("company");
+   const datePosted = document.getElementById("datePosted");
+   const messageDiv = document.getElementById('message');
+
+
+   submitBtn.addEventListener("click", async(e)=>{
+      e.preventDefault();
+      console.log({
+        title: jobType.value,
+        description: jobDescription.value,
+        salary: jobSalary.value,
+        offerDescription: offerDescription.value,
+        location: jobLocation.value,
+        picture: image.value,
+        applicants: applicants.value,
+        company: company.value,
+        datePosted: datePosted.value
+      });
+      const reqBody ={
+        title: jobType.value,
+        description: jobDescription.value,
+        salary: jobSalary.value,
+        offerDescription: offerDescription.value,
+        location: jobLocation.value,
+        picture: picture.value,
+        applicants: applicants.value,
+        company: company.value,
+        datePosted: datePosted.value
+      }
+      console.log(reqBody);
+      
+      try {
+        const response = await fetch(' http://localhost:4000/form/addjob', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reqBody)
+      }) 
+         const data = await response.json();
+        console.log(data);
+      if (data.ok) {
+
+        messageDiv.innerHTML = `<p>${data.message}</p>`;
+        submitBtn.disabled = true;
+              setTimeout(() => {
+                window.location.href = "/home";
+              }, 3000);      }
+      else{
+        messageDiv.innerHTML = `<p>${data.message}</p>`;
+        submitBtn.disabled = false;
+        
+      }
+      
+     
+      
+      
+      } catch (error) {
+
+        alert("Failed to add job. Please try again.");
+        
+      }
+   })
+
+</script>
+</body>
+</html>
